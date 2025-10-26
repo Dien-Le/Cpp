@@ -14,13 +14,13 @@ int insertion_sort(Node* begin_value){
     while (cache ->next != NULL){
         
         if (cache->next->a < cache->a) {
-        // Swapping stuff
+           // Swapping stuff (cache->next) ~ (cache)
             Node* cache_next = cache->next;
             Node* next_next = cache_next ->next;
             Node* cache_prev = cache -> prev;
         
             //Changing next values
-            cache->next = cache_next;
+            cache->next = cache_next->next;
             cache_next->next = cache;
 
             //Changing previous values
@@ -28,10 +28,8 @@ int insertion_sort(Node* begin_value){
             cache->prev = cache_next;
 
             //Changing parameters arround cache
-
             next_next -> prev = cache;
             cache_prev -> next = cache_next;
-
         }
 
         else {
@@ -61,7 +59,7 @@ int main() {
     n4.next = NULL;
     n4.prev = &n3;
 
-    insertion_sort(&n2);
+    insertion_sort(&n1);
 
     return 0;
 }
