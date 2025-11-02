@@ -8,6 +8,37 @@ struct Node {
     Node* prev;
 };
 
+int swap(Node* swap_element1,Node* swap_element2,Node* begin_value){
+
+    //Getting the value (run through the list)
+    Node* cache = begin_value;
+    Node    *prev_element1, *prev_element2, *next_element1, *next_element2;
+
+    while (cache->next != NULL){
+        if (cache->next == swap_element1) {
+            prev_element1 = cache;
+        }
+        if (cache->next == swap_element2) {
+           prev_element2 = cache;
+        }
+        if (cache == swap_element1) {
+            next_element1 = cache->next;
+        }
+        if (cache == swap_element2) {
+            next_element2 = cache->next;
+        }
+        cache = cache ->next;
+    }
+    prev_element1->next = swap_element2;
+    swap_element2->next = next_element1;
+
+    prev_element2->next = swap_element1;
+    swap_element1->next = next_element2;
+
+
+    return 0;
+}
+
 int insertion_sort(Node* begin_value){
 
     Node* cache = begin_value;
@@ -59,7 +90,13 @@ int main() {
     n4.next = NULL;
     n4.prev = &n3;
 
-    insertion_sort(&n1);
+    swap(&n2, &n4, &n1);
+    // insertion_sort(&n1);
+    Node* cache = &n1;
 
+    while (cache != NULL) {
+        cout << cache->a << "-";
+        cache = cache->next;
+    }
     return 0;
 }
