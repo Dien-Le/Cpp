@@ -8,6 +8,22 @@ struct Node {
     Node* prev;
 };
 
+int swap_next(Node* swap_element, Node* begin_value){
+    /* swap swap_element <-> swap_element->next */
+    Node* cache = begin_value;
+
+    while (cache != nullptr){
+        if (cache->next == swap_element) {
+            cache->next = swap_element->next;
+            swap_element->next = cache->next->next;
+            cache->next->next=swap_element;
+            break;
+        }
+        cache = cache->next;
+    }
+    return 0;
+}
+
 int swap(Node* swap_element1,Node* swap_element2,Node* begin_value){
 
     //Getting the value (run through the list)
@@ -29,11 +45,11 @@ int swap(Node* swap_element1,Node* swap_element2,Node* begin_value){
         }
         cache = cache ->next;
     }
-    prev_element1->next = swap_element2;
-    swap_element2->next = next_element1;
+    prev_element1->next = swap_element2; // (Prev -> next) of 1 = element 2
+    swap_element2->next = next_element1; // Next element of 2 = (Originally) Next element of 1
 
-    prev_element2->next = swap_element1;
-    swap_element1->next = next_element2;
+    prev_element2->next = swap_element1; // (Prev -> next) of 2 = element 1
+    swap_element1->next = next_element2; // Next element of 1 = (Originally) Next element of 2
 
 
     return 0;
@@ -42,9 +58,13 @@ int swap(Node* swap_element1,Node* swap_element2,Node* begin_value){
 int insertion_sort(Node* begin_value){
 
     Node* cache = begin_value;
-    while (cache ->next != NULL){
-        
-        if (cache->next->a < cache->a) {
+    for (int i=0; i<4; i++) {
+        while (cache ->next != nullptr){
+
+            if (cache->next->a < cache->a) {
+            cout << "'Call swap_next " << cache->a << "<->" <<cache->next->a << endl;
+            swap_next(cache, begin_value);
+            /*
            // Swapping stuff (cache->next) ~ (cache)
             Node* cache_next = cache->next;
             Node* next_next = cache_next ->next;
@@ -61,13 +81,17 @@ int insertion_sort(Node* begin_value){
             //Changing parameters arround cache
             next_next -> prev = cache;
             cache_prev -> next = cache_next;
+            */
+           cache = cache ->next;
         }
 
-        else {
-        // If nothing goes wrong
-            cache = cache ->next;
-        }
-    };
+            else {
+            // If nothing goes wrong
+                cache = cache ->next;
+            }
+        };
+
+    }
     return 0;
 }
 
@@ -90,8 +114,7 @@ int main() {
     n4.next = NULL;
     n4.prev = &n3;
 
-    swap(&n2, &n4, &n1);
-    // insertion_sort(&n1);
+    insertion_sort(&n1);
     Node* cache = &n1;
 
     while (cache != NULL) {
