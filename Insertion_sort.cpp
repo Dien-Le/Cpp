@@ -14,9 +14,11 @@ int swap_next(Node* swap_element, Node* begin_value){
 
     while (cache != nullptr){
         if (cache->next == swap_element) {
-            cache->next = swap_element->next;
+            cache->next = swap_element->next; //3-> next = 6
             swap_element->next = cache->next->next;
-            cache->next->next=swap_element;
+            cache->next->next=swap_element; // What does this line do?
+            // 3 - 5 - 6 - 8
+            // 3 - 6 - 5 ..
             break;
         }
         cache = cache->next;
@@ -57,36 +59,19 @@ int swap(Node* swap_element1,Node* swap_element2,Node* begin_value){
 
 int insertion_sort(Node* begin_value){
 
-    Node* cache = begin_value;
     for (int i=0; i<4; i++) {
-        while (cache ->next != nullptr){
+        Node* cache = begin_value;
+        while (cache != nullptr){
+            if (cache -> next == nullptr);
+                break; //Ensure that the program doesn't play with Null values
 
             if (cache->next->a < cache->a) {
-            cout << "'Call swap_next " << cache->a << "<->" <<cache->next->a << endl;
-            swap_next(cache, begin_value);
-            /*
-           // Swapping stuff (cache->next) ~ (cache)
-            Node* cache_next = cache->next;
-            Node* next_next = cache_next ->next;
-            Node* cache_prev = cache -> prev;
-        
-            //Changing next values
-            cache->next = cache_next->next;
-            cache_next->next = cache;
-
-            //Changing previous values
-            cache_next->prev = cache->prev;
-            cache->prev = cache_next;
-
-            //Changing parameters arround cache
-            next_next -> prev = cache;
-            cache_prev -> next = cache_next;
-            */
-           cache = cache ->next;
+                cout << "'Call swap_next " << cache->a << "<->" <<cache->next->a << endl;
+                swap_next(cache, begin_value);
+                cache = cache->next;
         }
 
-            else {
-            // If nothing goes wrong
+            else { //When there is no smaller value detected
                 cache = cache ->next;
             }
         };
