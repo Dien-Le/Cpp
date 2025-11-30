@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 
@@ -6,6 +5,18 @@ struct Node {
     int a; 
     Node* next;
     Node* prev;
+    // Ddefault consturctor
+    Node(){
+        a = 0;
+        next = nullptr;
+        prev = nullptr;
+    }
+    // Pparameterrized constructor
+    Node(int data) {
+        a = data;
+        next = nullptr;
+        prev = nullptr;
+    }
 };
 
 int swap_next(Node* swap_element, Node* begin_value){
@@ -26,7 +37,7 @@ int swap_next(Node* swap_element, Node* begin_value){
     return 0;
 }
 
-int swap(Node* swap_element1,Node* swap_element2,Node* begin_value){
+int swap_func(Node* swap_element1,Node* swap_element2,Node* begin_value){
 
     //Getting the value (run through the list)
     Node* cache = begin_value;
@@ -57,27 +68,43 @@ int swap(Node* swap_element1,Node* swap_element2,Node* begin_value){
     return 0;
 }
 
-int insertion_sort(Node* begin_value){
+int selection_sort(Node* begin_value) {
 
-    for (int i=0; i<4; i++) {
+
+    for (int i=0;i<4;i++) {
         Node* cache = begin_value;
-        while (cache != nullptr){
-            if (cache -> next == nullptr){
-                break; //Ensure that the program doesn't play with Null values
-            }
+        Node* next_val = cache->next;
+        // memory allocation
+        Node* min = new Node(next_val->a); 
 
-            if (cache->next->a < cache->a) {
-                cout << "'Call swap_next " << cache->a << "<->" <<cache->next->a << endl;
-                swap_next(cache, begin_value);
-                cache = cache->next;
+        //This for loop here should not run when i=0
+
+        for (int x= 0;i;x++) { // Utilizing nested loop
+            cache = cache -> next;
         }
 
-            else { //When there is no smaller value detected
-                cache = cache ->next;
+        while (next_val != nullptr) {
+
+            if (next_val->a < min->a) {
+                min->a = next_val->a; // Establishing min value
+                next_val = next_val -> next;
             }
-        };
+            else {
+                next_val = next_val -> next; // Continue if can't find min value
+            }
+        }
+
+        if (cache->next->a == min->a) {
+            swap_next(cache,begin_value);
+        }
+        else {
+            swap_func(cache,min,begin_value);
+        }
+
+        
 
     }
+
     return 0;
 }
 
@@ -100,7 +127,7 @@ int main() {
     n4.next = NULL;
     n4.prev = &n3;
 
-    insertion_sort(&n1);
+    selection_sort(&n1);
     Node* cache = &n1;
 
     while (cache != NULL) {
